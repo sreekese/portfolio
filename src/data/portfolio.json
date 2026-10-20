@@ -1,0 +1,158 @@
+{
+  "name": "Sreekese P S",
+  "status": "React.js Developer · Thrissur, Kerala",
+  "tagline": "Responsive interfaces. Reusable components. Thoughtful frontend development.",
+  "lede": "I'm a frontend software engineer with seven years of professional web development experience. I build responsive, component-based interfaces with JavaScript and bring that foundation to React.js and TypeScript.",
+  "statement": "My work connects responsive UI development, reusable frontend modules, and REST API integration. Alongside production website development, I have built self-driven React.js projects and strengthened my skills through structured React and JavaScript coursework.",
+  "email": "sreekeseps@gmail.com",
+  "skills": ["React.js", "Movies", "Offers", "Video"],
+  "elsewhere": [
+    ["GitHub", "https://github.com/sreekese"],
+    ["LinkedIn", "https://www.linkedin.com/in/sreekese/"]
+  ],
+  "stats": [
+    [7, "", "Years in web development"],
+    [3, "", "Self-driven React projects"],
+    [2, "", "Professional roles"],
+    [4, "", "Certifications"]
+  ],
+  "marquee": [
+    "React.js",
+    "JavaScript",
+    "TypeScript",
+    "Responsive UI",
+    "REST APIs",
+    "Reusable components"
+  ],
+  "services": [
+    {
+      "t": "Frontend development",
+      "d": "Responsive interfaces and reusable UI components, backed by professional web development experience.",
+      "l": [
+        "React.js, JavaScript (ES6+), TypeScript",
+        "HTML5 and CSS3",
+        "Tailwind CSS, Bootstrap, responsive design"
+      ],
+      "ic": "M4 6h16M4 12h10M4 18h16"
+    },
+    {
+      "t": "API integration & CMS",
+      "d": "Connecting interfaces to dynamic content and extending websites with reusable frontend modules.",
+      "l": [
+        "REST API integration and JSON",
+        "Component state management",
+        "PHP, WordPress and WooCommerce"
+      ],
+      "ic": "M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"
+    },
+    {
+      "t": "Delivery & code quality",
+      "d": "Collaborating on production websites with version control, code quality checks, and an Agile workflow.",
+      "l": [
+        "Git, GitHub and GitLab",
+        "Docker and SonarQube",
+        "Clean code and Agile practices"
+      ],
+      "ic": "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"
+    }
+  ],
+  "experience": [
+    {
+      "when": "May 2021 – Present",
+      "role": "Software Engineer",
+      "org": "Fingent Global Solutions Pvt. Ltd. · Kochi, India",
+      "d": "Developing responsive interfaces, reusable frontend modules, and integrations for custom client websites.",
+      "highlights": [
+        "Built responsive, component-based UIs using reusable patterns and modern JavaScript.",
+        "Developed and maintained frontend modules and plugins, including payment gateway integrations.",
+        "Integrated REST APIs for dynamic content, custom post types, and taxonomies.",
+        "Translated designs into pixel-accurate, user-friendly interfaces.",
+        "Used Git/GitLab and SonarQube within an Agile development workflow."
+      ]
+    },
+    {
+      "when": "April 2019 – May 2021",
+      "role": "Software Developer",
+      "org": "Techminds Mizago Technology Pvt. Ltd. · Kerala, India",
+      "d": "Contributed to frontend development across client web applications.",
+      "highlights": [
+        "Developed interfaces using HTML, CSS, and JavaScript.",
+        "Built and styled responsive UI components across multiple client projects."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "no": "01",
+      "title": "Netflix Clone",
+      "year": "Personal project",
+      "kind": "bars",
+      "tags": ["React.js", "Movies"],
+      "brief": "A self-driven React.js movie application inspired by Netflix.",
+      "url": "https://movie-app-b5d79.web.app/",
+      "facts": [
+        ["Type", "Self-driven project"],
+        ["Technology", "React.js"],
+        ["Focus", "Movies"]
+      ]
+    },
+    {
+      "no": "02",
+      "title": "Offer Application",
+      "year": "Personal project",
+      "kind": "grid",
+      "tags": ["React.js", "Offers"],
+      "brief": "A self-driven React.js application focused on offers.",
+      "url": "https://store-app-web-theta.vercel.app/",
+      "facts": [
+        ["Type", "Self-driven project"],
+        ["Technology", "React.js"],
+        ["Focus", "Offers"]
+      ]
+    },
+    {
+      "no": "03",
+      "title": "Youtube Clone",
+      "year": "Personal project",
+      "kind": "nodes",
+      "tags": ["React.js", "Video"],
+      "brief": "A self-driven React.js project inspired by YouTube.",
+      "url": "https://clone-youtube-pi-eight.vercel.app/",
+      "facts": [
+        ["Type", "Self-driven project"],
+        ["Technology", "React.js"],
+        ["Focus", "Video"]
+      ]
+    }
+  ],
+  "phone": "+91 8281437586",
+  "phoneHref": "tel:+918281437586",
+  "location": "Thrissur, Kerala, India",
+  "certifications": [
+    "Namaste React — Akshay Saini",
+    "Namaste JavaScript — Akshay Saini",
+    "Programming with JavaScript — Coursera",
+    "Meta React — Coursera"
+  ],
+  "education": [
+    {
+      "qualification": "B.Tech · Electronics & Communication Engineering",
+      "institution": "Govt. Engineering College, Idukki · MG University",
+      "year": "2016",
+      "result": "CGPA 6.4"
+    },
+    {
+      "qualification": "Higher Secondary (12th Grade)",
+      "institution": "SNDPHSS, Palissery, Mala · Kerala HSE Board",
+      "year": "2011",
+      "result": "91.07%"
+    },
+    {
+      "qualification": "Secondary School (10th Grade)",
+      "institution": "HCCEMHSS, Snehagiri, Mala · Govt. of Kerala",
+      "year": "2009",
+      "result": "96%"
+    }
+  ],
+  "spokenIntro": "Hi, I'm Sreekese P S, a frontend software engineer from Thrissur, Kerala. I have seven years of professional web development experience, and I focus on React, JavaScript, and TypeScript. At Fingent, I build responsive interfaces, reusable frontend modules, and REST API integrations. I also enjoy developing my own React projects. Take a look at my work, and let's connect!"
+}
