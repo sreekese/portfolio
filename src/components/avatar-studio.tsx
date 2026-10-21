@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { SpeakingCharacter } from "@/components/speaking-character";
 
 type Props = { speaking: boolean; reduced: boolean };
 export function AvatarStudio({ speaking, reduced }: Props) {
@@ -35,7 +34,7 @@ export function AvatarStudio({ speaking, reduced }: Props) {
       const { scene, pose } = createAvatarStudio();
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
       renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = T.PCFSoftShadowMap;
+      renderer.shadowMap.type = T.PCFShadowMap;
       renderer.toneMapping = T.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.1;
       renderer.domElement.setAttribute("aria-hidden", "true");
@@ -127,12 +126,11 @@ export function AvatarStudio({ speaking, reduced }: Props) {
     <span
       className="avatar-studio"
       data-status={status}
-      data-motion={reduced ? "paused" : speaking ? "talking" : "walking"}
+      data-motion={reduced ? "paused" : speaking ? "talking" : "standing"}
     >
       <span ref={host} className="avatar-canvas" />
       {status !== "ready" && (
         <span className="studio-fallback">
-          <SpeakingCharacter />
           <span className="studio-loading">
             {status === "loading"
               ? "Preparing my studio…"

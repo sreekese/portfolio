@@ -87,12 +87,6 @@ export function SpeakingCharacter() {
           strokeLinecap="round"
         />
         <path
-          d="M137 95h6"
-          stroke="#ad4248"
-          strokeWidth="4"
-          strokeLinecap="round"
-        />
-        <path
           d="M119 160q10-7 21-3 11-4 21 3l-8 6-13-3-13 3Z"
           fill="#383039"
           stroke="none"

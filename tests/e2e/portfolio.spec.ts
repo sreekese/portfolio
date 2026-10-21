@@ -343,3 +343,37 @@ test("3D fallback retains click-to-speak without WebGL", async ({ page }) => {
   );
   await expect(page.locator(".intro-transcript")).toHaveCount(0);
 });
+
+test("project screenshots switch to recorded GIFs on hover", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const cards = page.locator("#work .card");
+  for (let i = 0; i < 3; i++) {
+    const card = cards.nth(i);
+    await card.scrollIntoViewIfNeeded();
+    const poster = card.locator(".project-preview > img").first();
+    await expect
+      .poll(() =>
+        poster.evaluate((img) => (img as HTMLImageElement).naturalWidth),
+      )
+      .toBeGreaterThan(0);
+    await card.locator("h3").hover();
+    const animation = card.locator(".project-preview-animation");
+    await expect(animation).toBeVisible();
+    await expect
+      .poll(() =>
+        animation.evaluate((img) => (img as HTMLImageElement).naturalWidth),
+      )
+      .toBe(640);
+    await page.mouse.move(0, 0);
+    await expect(animation).toHaveCount(0);
+  }
+  const preview = cards.first().locator(".project-preview");
+  await preview.focus();
+  await expect(preview).toHaveAttribute("data-playing", "true");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(preview).toHaveAttribute("data-playing", "false");
+  await expect(page.locator(".project-preview-animation")).toHaveCount(0);
+});

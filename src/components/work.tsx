@@ -13,6 +13,7 @@ export function Work({
   skills: string[];
   children: React.ReactNode;
 }) {
+  const [hovered, setHovered] = useState<string | null>(null);
   const [filter, setFilter] = useState("All");
   const [selected, setSelected] = useState<number | null>(null);
   const visible = filterProjects(projects, filter);
@@ -62,8 +63,16 @@ export function Work({
           </div>
           <div className="grid">
             {visible.map((project, index) => (
-              <article key={project.no} className="card">
-                <ProjectArt project={project} />
+              <article
+                key={project.no}
+                className="card"
+                onMouseEnter={() => setHovered(project.no)}
+                onMouseLeave={() => setHovered(null)}
+              >
+                <ProjectArt
+                  project={project}
+                  hovered={hovered === project.no}
+                />
                 <div className="card-body">
                   <span className="no mono">
                     {project.no} / {project.year}
@@ -86,6 +95,15 @@ export function Work({
                       <span key={tag}>{tag}</span>
                     ))}
                   </div>
+                  <a
+                    className="project-website"
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit ${project.title} website (opens in a new tab)`}
+                  >
+                    Visit website <span aria-hidden="true">↗</span>
+                  </a>
                 </div>
               </article>
             ))}

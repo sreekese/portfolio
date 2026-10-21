@@ -6,6 +6,19 @@ export function createAvatarStudio() {
   const materials = {
     skin: new T.MeshStandardMaterial({ color: "#b77b55", roughness: 0.65 }),
     hair: new T.MeshStandardMaterial({ color: "#202029", roughness: 0.8 }),
+    hairHighlight: new T.MeshStandardMaterial({
+      color: "#303039",
+      roughness: 0.55,
+    }),
+    iris: new T.MeshStandardMaterial({ color: "#54392c", roughness: 0.35 }),
+    lens: new T.MeshPhysicalMaterial({
+      color: "#d7edf3",
+      transparent: true,
+      opacity: 0.09,
+      roughness: 0.08,
+      metalness: 0.1,
+      depthWrite: false,
+    }),
     shirt: new T.MeshStandardMaterial({ color: "#762b40", roughness: 0.85 }),
     seam: new T.MeshStandardMaterial({ color: "#a04757", roughness: 0.8 }),
     denim: new T.MeshStandardMaterial({ color: "#284968", roughness: 0.9 }),
@@ -204,22 +217,60 @@ export function createAvatarStudio() {
   ellipsoid(head, materials.skin, 0, 0, 0, 0.255, 0.33, 0.235);
   for (const side of [-1, 1])
     ellipsoid(head, materials.skin, side * 0.25, -0.01, 0, 0.055, 0.09, 0.055);
-  // Close beard, swept dark hair, rectangular spectacles and forehead mark.
-  ellipsoid(head, materials.hair, 0, -0.17, 0.025, 0.227, 0.17, 0.205);
-  ellipsoid(head, materials.skin, 0, -0.095, 0.155, 0.17, 0.13, 0.095);
-  ellipsoid(head, materials.hair, 0, 0.23, -0.025, 0.267, 0.16, 0.245);
-  for (let i = 0; i < 7; i++) {
-    const lock = ellipsoid(
-      head,
+  // Close-fitting beard and a continuous swept hairstyle, rather than bead-like locks.
+  ellipsoid(head, materials.hair, 0, -0.18, -0.005, 0.216, 0.135, 0.194);
+  ellipsoid(head, materials.skin, 0, -0.095, 0.16, 0.178, 0.125, 0.088);
+  const hair = new T.Group();
+  hair.name = "swept-hair";
+  head.add(hair);
+  ellipsoid(hair, materials.hair, 0, 0.22, -0.035, 0.263, 0.145, 0.235);
+  const sweep = ellipsoid(
+    hair,
+    materials.hair,
+    -0.025,
+    0.28,
+    0.055,
+    0.24,
+    0.115,
+    0.18,
+  );
+  sweep.rotation.z = -0.18;
+  for (const side of [-1, 1]) {
+    ellipsoid(
+      hair,
       materials.hair,
-      -0.21 + i * 0.065,
-      0.25 + Math.sin(i * 0.5) * 0.055,
-      0.07,
-      0.095,
-      0.1,
-      0.16,
+      side * 0.239,
+      0.105,
+      -0.025,
+      0.028,
+      0.12,
+      0.145,
     );
-    lock.rotation.z = -0.45;
+    ellipsoid(
+      head,
+      materials.skin,
+      side * 0.255,
+      -0.01,
+      0.026,
+      0.024,
+      0.052,
+      0.035,
+    );
+  }
+  // Fine curved ridges follow the sweep and catch the studio light.
+  for (let i = 0; i < 12; i++) {
+    const offset = i * 0.026;
+    const curve = new T.CatmullRomCurve3([
+      new T.Vector3(-0.23 + offset, 0.205, 0.16),
+      new T.Vector3(-0.21 + offset, 0.295, 0.205),
+      new T.Vector3(-0.13 + offset, 0.35, 0.12),
+      new T.Vector3(-0.06 + offset * 0.8, 0.31, -0.025),
+    ]);
+    mesh(
+      hair,
+      new T.TubeGeometry(curve, 24, 0.0045, 6, false),
+      materials.hairHighlight,
+    );
   }
   const eyes = new T.Group();
   head.add(eyes);
@@ -231,17 +282,17 @@ export function createAvatarStudio() {
       0.01,
       0.211,
       0.061,
-      0.035,
-      0.022,
+      0.026,
+      0.018,
     );
     ellipsoid(
       eyes,
-      materials.hair,
+      materials.iris,
       side * 0.102,
       0.01,
       0.234,
       0.022,
-      0.026,
+      0.022,
       0.009,
     );
     ellipsoid(
@@ -279,8 +330,8 @@ export function createAvatarStudio() {
       new T.TubeGeometry(
         new T.CatmullRomCurve3(points, true),
         64,
-        0.009,
-        8,
+        0.0055,
+        10,
         true,
       ),
       materials.metal,
@@ -289,6 +340,26 @@ export function createAvatarStudio() {
       0.244,
     );
     rim.name = "spectacles";
+    const lens = mesh(
+      head,
+      new T.ShapeGeometry(shape, 24),
+      materials.lens,
+      side * 0.103,
+      0.015,
+      0.243,
+    );
+    lens.name = "spectacle-lens";
+    lens.castShadow = false;
+    ellipsoid(
+      head,
+      materials.metal,
+      side * 0.184,
+      0.035,
+      0.244,
+      0.009,
+      0.009,
+      0.009,
+    );
     rod(
       head,
       materials.metal,
@@ -305,7 +376,6 @@ export function createAvatarStudio() {
     0.008,
   );
   ellipsoid(head, materials.skin, 0, -0.045, 0.25, 0.042, 0.068, 0.05);
-  ellipsoid(head, materials.seam, 0, 0.145, 0.218, 0.014, 0.023, 0.005);
   for (const side of [-1, 1]) {
     const moustache = ellipsoid(
       head,
@@ -413,20 +483,14 @@ export function createAvatarStudio() {
   scene.add(rim);
   function pose(time: number, speaking: boolean, reduced: boolean) {
     const t = reduced ? 0 : time;
-    // A short bounded stroll beside the desk; speaking turns the face to visitors.
-    const walk = !speaking && !reduced;
-    person.position.set(
-      -0.8 + (walk ? Math.sin(t * 0.45) * 0.48 : 0),
-      walk ? Math.abs(Math.sin(t * 4)) * 0.025 : 0,
-      0.4,
-    );
-    person.rotation.y = walk ? Math.cos(t * 0.45) * 0.5 : 0.15;
-    legs.forEach(
-      (leg, i) =>
-        (leg.rotation.x = walk ? Math.sin(t * 4 + i * Math.PI) * 0.35 : 0),
-    );
+    // Keep the full-body stance fixed, including during speech.
+    person.position.set(-0.8, 0, 0.4);
+    person.rotation.y = 0.15;
+    legs.forEach((leg) => {
+      leg.rotation.x = 0;
+    });
     arms.forEach((arm, i) => {
-      arm.rotation.x = walk ? -Math.sin(t * 4 + i * Math.PI) * 0.25 : 0;
+      arm.rotation.x = 0;
       arm.rotation.z =
         (i === 0 ? 1 : -1) *
         (0.08 + (speaking && !reduced ? Math.sin(t * 2) * 0.06 : 0));

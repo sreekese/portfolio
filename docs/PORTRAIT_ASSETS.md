@@ -1,3 +1,9 @@
+# Stationary avatar refinement
+
+The character now stays at a fixed position and orientation. Walking and leg swings are removed; blinking and opt-in speech expressions remain. The forehead mark is removed from both the 3D model and SVG fallback. Hair uses a continuous swept silhouette with fine curved highlights, glasses use thinner frames and subtle transparent lenses, and eyes and beard proportions have been refined. This remains a stylized procedural model rather than a scanned likeness.
+
+## Previous implementation records
+
 # Full-body 3D studio
 
 The banner now lazy-loads a Three.js scene from `src/lib/avatar/model.ts` through `src/components/avatar-studio.tsx`. The local procedural model is a stylized approximation of the supplied photo, not an exact scan or photorealistic reconstruction. It includes swept dark hair, rectangular glasses, beard and moustache, forehead mark, burgundy shirt, jeans, watch and sneakers. A desk with an open laptop and a chair sits beside the character.
