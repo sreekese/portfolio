@@ -1,3 +1,23 @@
+# New orange-hoodie character
+
+Replaced the previous avatar geometry with a new simplified Three.js character inspired by the supplied `3d-og.avif` render, following the user's choice of a simplified 3D interpretation. The image is a visual reference, not an imported 3D asset. The new model has swept brown tapered hair locks, large layered eyes, a clean-shaven face, orange hoodie with hood/zipper/drawstrings, dark trousers, and two-tone sneakers. It has no glasses. Its face differs from the reference and is not a reconstruction of the user's face.
+
+The avatar stays stationary facing the studio camera, with relaxed arms, blinking and approximate mouth movement during browser speech. Reduced motion disables these movements. Existing desk, chair, laptop, click-to-speak controls and text-only loading state remain.
+
+## Previous implementation records
+
+# Natural standing refinement
+
+The current character has relaxed arms, a clean-shaven jaw with no moustache, smaller eyes and smile, and symmetrical rounded rectangular glasses. Body orientation is calculated from the shared studio camera position so the face points toward the visitor; a small upward head angle matches the camera elevation. The black shirt, tan trousers, white sneakers, stationary stance and click-to-speak behavior remain. The model is still a stylized procedural likeness, not a photographic reconstruction.
+
+## Previous implementation records
+
+# Reference outfit and pose
+
+The supplied `og.webp` reference now guides the procedural 3D character: charcoal button-up shirt with rolled cuffs, tan trousers with shaped folds, white sneakers, outstretched arms, defined fingers, fuller swept hair and a toothy smile. The desk and laptop remain in the banner. The avatar stays stationary; click-to-speak and reduced-motion support remain. This is a reference-inspired model, not a recovered mesh or exact reconstruction of the image.
+
+## Previous implementation records
+
 # Stationary avatar refinement
 
 The character now stays at a fixed position and orientation. Walking and leg swings are removed; blinking and opt-in speech expressions remain. The forehead mark is removed from both the 3D model and SVG fallback. Hair uses a continuous swept silhouette with fine curved highlights, glasses use thinner frames and subtle transparent lenses, and eyes and beard proportions have been refined. This remains a stylized procedural model rather than a scanned likeness.

@@ -14,10 +14,8 @@ export function AvatarStudio({ speaking, reduced }: Props) {
     let cancelled = false;
     let dispose: (() => void) | undefined;
     async function start() {
-      const [T, { createAvatarStudio }] = await Promise.all([
-        import("three"),
-        import("@/lib/avatar/model"),
-      ]);
+      const [T, { createAvatarStudio, studioCameraPosition }] =
+        await Promise.all([import("three"), import("@/lib/avatar/model")]);
       if (cancelled || !host.current) return;
       const element = host.current;
       let renderer: InstanceType<typeof T.WebGLRenderer>;
@@ -40,8 +38,8 @@ export function AvatarStudio({ speaking, reduced }: Props) {
       renderer.domElement.setAttribute("aria-hidden", "true");
       element.appendChild(renderer.domElement);
       const camera = new T.PerspectiveCamera(36, 1, 0.1, 30);
-      camera.position.set(3.5, 2.9, 6.8);
-      camera.lookAt(0, 1, 0);
+      camera.position.set(...studioCameraPosition);
+      camera.lookAt(0, 1.2, 0);
       let visible = true;
       let elapsed = 0;
       let last = 0;
