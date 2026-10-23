@@ -157,23 +157,25 @@ test("capture responsive reference preview", async ({ page }, testInfo) => {
   });
 });
 
-test("visitor can pause continuous animation", async ({ page }) => {
+test("header omits playback controls and system motion preferences still apply", async ({
+  page,
+}) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Pause animations" }).click();
+  await expect(
+    page
+      .locator("header")
+      .getByRole("button", { name: /Pause animations|Resume animations/ }),
+  ).toHaveCount(0);
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator(".mq-track")).toHaveCSS("animation-name", "none");
   await expect(page.locator(".ring")).toHaveCSS("animation-name", "none");
-  await page.getByRole("button", { name: "Resume animations" }).click();
-  await expect(page.locator(".mq-track")).toHaveCSS(
-    "animation-name",
-    "marquee",
-  );
 });
 
 test("resume qualifications and project destinations are present", async ({
   page,
 }) => {
   await page.goto("/");
-  await expect(page).toHaveTitle("Sreekese P S — React.js Developer");
+  await expect(page).toHaveTitle("Sreekese P S — Software Engineer");
   await expect(
     page.getByRole("heading", { name: "Certifications", exact: true }),
   ).toBeVisible();
@@ -292,10 +294,9 @@ test("speaking avatar respects motion preferences without blocking audio", async
     "none",
   );
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.getByRole("button", { name: "Pause animations" }).click();
   await expect(page.locator(".hero-avatar")).toHaveAttribute(
     "data-reduced-motion",
-    "true",
+    "false",
   );
   await page.getByRole("button", { name: "Stop audio", exact: true }).click();
 });
@@ -350,7 +351,7 @@ test("project screenshots switch to recorded GIFs on hover", async ({
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   const cards = page.locator("#work .card");
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < (await cards.count()); i++) {
     const card = cards.nth(i);
     await card.scrollIntoViewIfNeeded();
     const poster = card.locator(".project-preview > img").first();
@@ -376,4 +377,30 @@ test("project screenshots switch to recorded GIFs on hover", async ({
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(preview).toHaveAttribute("data-playing", "false");
   await expect(page.locator(".project-preview-animation")).toHaveCount(0);
+});
+
+test("Quick Show appears in work with its live link and booking filter", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const filters = page.getByRole("group", {
+    name: "Filter projects by category",
+  });
+  await filters.getByRole("button", { name: "Booking", exact: true }).click();
+  const card = page.locator("#work .card");
+  await expect(card).toHaveCount(1);
+  const link = card.getByRole("link", {
+    name: "Visit Quick Show — Movie Booking website (opens in a new tab)",
+  });
+  await expect(link).toHaveAttribute(
+    "href",
+    "https://movie-booking-app-five-mocha.vercel.app/",
+  );
+  await expect(link).toHaveAttribute("target", "_blank");
+  await card
+    .getByRole("button", { name: "Open Quick Show — Movie Booking" })
+    .click();
+  await expect(page.getByRole("dialog")).toContainText(
+    "Demo reservations; not valid admission tickets",
+  );
 });

@@ -2,7 +2,7 @@
 
 Updated 18 October 2026 from the supplied `Sreekese_PS_React.pdf`. This section supersedes the original sample-content inventory below. The engineering, security, accessibility and testing standards still apply.
 
-- Identity: Sreekese P S, React.js Developer (Frontend), Thrissur, Kerala, India.
+- Identity: Sreekese P S, Software Engineer, Thrissur, Kerala, India.
 - Experience: seven years as stated in the resume; Fingent Global Solutions (May 2021–Present) and Techminds Mizago Technology (April 2019–May 2021). Do not imply seven years specifically in React.
 - Projects: Netflix Clone, Offer Application and Youtube Clone, each a self-driven React.js project with the supplied external demo URL. Project dates, implementation details and outcome metrics are not supplied and must not be invented.
 - Project filters: All (3), React.js (3), Movies (1), Offers (1), Video (1). Technical skills are listed separately in the About capabilities cards.
@@ -47,7 +47,7 @@ The baseline requires no accounts, database, CMS, payment service, uploads, anal
 | FR-09 | Metrics and specialties | Four supplied metrics and a decorative specialties marquee; content remains readable without animation |
 | FR-10 | Contact | Visible email, mailto link, copy button, honest success/failure status, supplied social profiles, footer credit, and two-day response copy |
 | FR-11 | Theme | System preference by default, manual dark/light toggle, local preference persistence; storage failure must not break switching |
-| FR-12 | Motion and responsive layout | Responsive grid, bounded skill chips, name reaction, scroll progress, reveal effects and timeline emphasis; reduced-motion mode and a visitor-controlled Pause animations button disable decorative animation |
+| FR-12 | Motion and responsive layout | Responsive grid, bounded skill chips, name reaction, scroll progress, reveal effects and timeline emphasis; system reduced-motion preferences disable decorative animation; no playback control is shown in the header |
 | FR-13 | Metadata and resilience | Title, description, canonical/Open Graph metadata, icon, robots, sitemap, 404 and safe error UI; no external runtime font requests |
 
 ### Reference content inventory

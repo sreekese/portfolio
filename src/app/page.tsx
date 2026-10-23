@@ -1,5 +1,5 @@
 import Image from "next/image";
-import photo from "@/assets/sreekese-photo-enhanced.png";
+import photo from "@/assets/sreekese-photo-clean.png";
 import { HeroAvatar } from "@/components/hero-avatar";
 import { connection } from "next/server";
 import { Header } from "@/components/header";
@@ -88,7 +88,7 @@ export default async function Home() {
                   </defs>
                   <text>
                     <textPath href="#portrait-circle">
-                      React.js / Frontend development /
+                      HTML / CSS / JavaScript /PHP / FastAPI / React.js /
                     </textPath>
                   </text>
                 </svg>
@@ -190,7 +190,7 @@ export default async function Home() {
             <div className="contact">
               <span className="eyebrow mono">Contact</span>
               <h2 className="h2">
-                Let’s build your next <em>frontend.</em>
+                Let’s build your next <em>application.</em>
               </h2>
               <Contact email={portfolio.email} />
               <p className="contact-details">
@@ -214,8 +214,8 @@ export default async function Home() {
               </div>
             </div>
             <footer className="foot mono">
-              <span>{portfolio.name} · React.js Developer</span>
-              <span>Frontend development · React.js</span>
+              <span>{portfolio.name} · Software Engineer</span>
+              <span>Software engineering · React.js</span>
             </footer>
           </div>
         </section>

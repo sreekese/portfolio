@@ -14,7 +14,7 @@ describe("project discovery", () => {
   it("renders all cards and synchronizes both filter controls", async () => {
     const user = userEvent.setup();
     setup();
-    expect(screen.getAllByRole("article")).toHaveLength(3);
+    expect(screen.getAllByRole("article")).toHaveLength(4);
     const filters = screen.getByRole("group", {
       name: "Filter projects by category",
     });
@@ -27,7 +27,7 @@ describe("project discovery", () => {
     ).toBe(true);
     const toolbox = screen.getByRole("complementary");
     await user.click(within(toolbox).getByRole("button", { name: "React.js" }));
-    expect(screen.getAllByRole("article")).toHaveLength(3);
+    expect(screen.getAllByRole("article")).toHaveLength(4);
   });
   it("supports keyboard filtering and an empty-result recovery", async () => {
     const user = userEvent.setup();
@@ -40,7 +40,7 @@ describe("project discovery", () => {
     await user.keyboard("{Enter}");
     expect(screen.queryAllByRole("article")).toHaveLength(0);
     await user.click(screen.getByRole("button", { name: "Show all projects" }));
-    expect(screen.getAllByRole("article")).toHaveLength(3);
+    expect(screen.getAllByRole("article")).toHaveLength(4);
   });
   it("navigates only filtered projects, wraps and restores focus on close", async () => {
     const user = userEvent.setup();

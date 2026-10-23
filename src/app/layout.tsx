@@ -5,18 +5,21 @@ import "./fonts.css";
 import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: siteUrl(),
-  title: "Sreekese P S — React.js Developer",
+  title: "Sreekese P S — Software Engineer",
   description:
-    "Sreekese P S, frontend software engineer in Thrissur, Kerala. Seven years of web development experience, React.js projects, JavaScript and TypeScript.",
+    "Sreekese P S, Software Engineer in Thrissur, Kerala. Seven years of web development experience, React.js projects, JavaScript, TypeScript, PHP and FastAPI.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Sreekese P S — React.js Portfolio",
+    title: "Sreekese P S — Software Engineer Portfolio",
     description:
-      "React.js projects, responsive interfaces, and reusable frontend components.",
+      "React.js projects, responsive interfaces, and reusable software components.",
     type: "website",
     url: "/",
   },
-  twitter: { card: "summary", title: "Sreekese P S — React.js Portfolio" },
+  twitter: {
+    card: "summary",
+    title: "Sreekese P S — Software Engineer Portfolio",
+  },
 };
 export default function RootLayout({
   children,

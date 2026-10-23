@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { toggleMotion, useMotionPaused } from "@/hooks/use-reduced-motion";
 import { initials } from "@/lib/portfolio";
 function storedTheme(): string | null {
   try {
@@ -19,7 +18,6 @@ function subscribe(notify: () => void) {
   };
 }
 export function Header({ name }: { name: string }) {
-  const motionPaused = useMotionPaused();
   const preferredDark = useMediaQuery("(prefers-color-scheme: dark)");
   const stored = useSyncExternalStore(subscribe, storedTheme, () => null);
   const [override, setOverride] = useState<string | null>(null);
@@ -79,15 +77,6 @@ export function Header({ name }: { name: string }) {
             aria-label={`Switch to ${dark ? "light" : "dark"} theme`}
           >
             <i aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            className="icon-btn"
-            onClick={toggleMotion}
-            aria-pressed={motionPaused}
-            aria-label={motionPaused ? "Resume animations" : "Pause animations"}
-          >
-            <span aria-hidden="true">{motionPaused ? "▷" : "Ⅱ"}</span>
           </button>
         </nav>
       </div>

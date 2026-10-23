@@ -1,9 +1,11 @@
 """Encode captured website frames as small looping GIF previews (requires Pillow)."""
 from pathlib import Path
 import sys
+import json
 from PIL import Image
 
-for number in (sys.argv[1:] or ("01", "02", "03")):
+projects = json.loads(Path("src/data/portfolio.json").read_text())["projects"]
+for number in (sys.argv[1:] or [project["no"] for project in projects]):
     paths = sorted(Path(f"/tmp/portfolio-capture-{number}").glob("*.png"))
     if len(paths) != 36:
         raise RuntimeError(f"Incomplete capture for {number}: {len(paths)} frames")

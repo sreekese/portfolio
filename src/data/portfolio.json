@@ -1,18 +1,26 @@
 {
   "name": "Sreekese P S",
-  "status": "React.js Developer · Thrissur, Kerala",
-  "tagline": "Responsive interfaces. Reusable components. Thoughtful frontend development.",
-  "lede": "I'm a frontend software engineer with seven years of professional web development experience. I build responsive, component-based interfaces with JavaScript and bring that foundation to React.js and TypeScript.",
-  "statement": "My work connects responsive UI development, reusable frontend modules, and REST API integration. Alongside production website development, I have built self-driven React.js projects and strengthened my skills through structured React and JavaScript coursework.",
+  "status": "Software Engineer · Thrissur, Kerala",
+  "tagline": "Responsive interfaces. Reusable components. Thoughtful software engineering.",
+  "lede": "I'm a software engineer with seven years of professional web development experience. I work with React.js, JavaScript, TypeScript, PHP, and FastAPI to build responsive applications and integrate APIs.",
+  "statement": "My work connects responsive UI development, reusable software modules, and REST API integration. Alongside production website development, I have built self-driven React.js projects and strengthened my skills through structured React and JavaScript coursework.",
   "email": "sreekeseps@gmail.com",
-  "skills": ["React.js", "Movies", "Offers", "Video"],
+  "skills": [
+    "React.js",
+    "Movies",
+    "Offers",
+    "Video",
+    "Booking",
+    "PHP",
+    "FastAPI"
+  ],
   "elsewhere": [
     ["GitHub", "https://github.com/sreekese"],
     ["LinkedIn", "https://www.linkedin.com/in/sreekese/"]
   ],
   "stats": [
     [7, "", "Years in web development"],
-    [3, "", "Self-driven React projects"],
+    [4, "", "Personal projects"],
     [2, "", "Professional roles"],
     [4, "", "Certifications"]
   ],
@@ -22,11 +30,13 @@
     "TypeScript",
     "Responsive UI",
     "REST APIs",
-    "Reusable components"
+    "Reusable components",
+    "PHP",
+    "FastAPI"
   ],
   "services": [
     {
-      "t": "Frontend development",
+      "t": "Software engineering",
       "d": "Responsive interfaces and reusable UI components, backed by professional web development experience.",
       "l": [
         "React.js, JavaScript (ES6+), TypeScript",
@@ -36,9 +46,10 @@
       "ic": "M4 6h16M4 12h10M4 18h16"
     },
     {
-      "t": "API integration & CMS",
-      "d": "Connecting interfaces to dynamic content and extending websites with reusable frontend modules.",
+      "t": "API development & CMS",
+      "d": "Connecting interfaces to dynamic content and extending websites with reusable software modules.",
       "l": [
+        "FastAPI and PHP",
         "REST API integration and JSON",
         "Component state management",
         "PHP, WordPress and WooCommerce"
@@ -61,10 +72,10 @@
       "when": "May 2021 – Present",
       "role": "Software Engineer",
       "org": "Fingent Global Solutions Pvt. Ltd. · Kochi, India",
-      "d": "Developing responsive interfaces, reusable frontend modules, and integrations for custom client websites.",
+      "d": "Developing responsive interfaces, reusable software modules, and integrations for custom client websites.",
       "highlights": [
         "Built responsive, component-based UIs using reusable patterns and modern JavaScript.",
-        "Developed and maintained frontend modules and plugins, including payment gateway integrations.",
+        "Developed and maintained software modules and plugins, including payment gateway integrations.",
         "Integrated REST APIs for dynamic content, custom post types, and taxonomies.",
         "Translated designs into pixel-accurate, user-friendly interfaces.",
         "Used Git/GitLab and SonarQube within an Agile development workflow."
@@ -74,7 +85,7 @@
       "when": "April 2019 – May 2021",
       "role": "Software Developer",
       "org": "Techminds Mizago Technology Pvt. Ltd. · Kerala, India",
-      "d": "Contributed to frontend development across client web applications.",
+      "d": "Contributed to web development across client web applications.",
       "highlights": [
         "Developed interfaces using HTML, CSS, and JavaScript.",
         "Built and styled responsive UI components across multiple client projects."
@@ -123,6 +134,20 @@
         ["Technology", "React.js"],
         ["Focus", "Video"]
       ]
+    },
+    {
+      "no": "04",
+      "title": "Quick Show — Movie Booking",
+      "year": "Personal project",
+      "kind": "grid",
+      "tags": ["Movies", "Booking"],
+      "brief": "A cinema-booking demo for exploring movies, choosing screenings and seats, and viewing reservations.",
+      "url": "https://movie-booking-app-five-mocha.vercel.app/",
+      "facts": [
+        ["Type", "Personal project"],
+        ["Focus", "Movie discovery and seat booking"],
+        ["Status", "Demo reservations; not valid admission tickets"]
+      ]
     }
   ],
   "phone": "+91 8281437586",
@@ -154,5 +179,5 @@
       "result": "96%"
     }
   ],
-  "spokenIntro": "Hi, I'm Sreekese P S, a frontend software engineer from Thrissur, Kerala. I have seven years of professional web development experience, and I focus on React, JavaScript, and TypeScript. At Fingent, I build responsive interfaces, reusable frontend modules, and REST API integrations. I also enjoy developing my own React projects. Take a look at my work, and let's connect!"
+  "spokenIntro": "Hi, I'm Sreekese P S, a software engineer from Thrissur, Kerala. I have seven years of professional web development experience, and I focus on React, JavaScript, TypeScript, PHP, and FastAPI. At Fingent, I build responsive interfaces, reusable software modules, and REST API integrations. I also enjoy developing my own React projects. Take a look at my work, and let's connect!"
 }

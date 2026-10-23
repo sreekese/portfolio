@@ -51,7 +51,7 @@ The original HTML and Markdown files remain as supplied.
 
 ## Personal portraits
 
-The About section uses your original photograph with a circular crop. The hero uses a transparent illustrated likeness with pointer-following tilt, a brief greeting animation, and keyboard/touch support. Motion honors system preferences and the Pause animations control. Assets and the built-in image-generation prompt are documented in [PORTRAIT_ASSETS.md](./docs/PORTRAIT_ASSETS.md).
+The About section uses the enhanced portrait with the forehead mark removed. The hero uses a stationary 3D character with click-to-speak and keyboard/touch support. Motion honors system preferences; the header animation button has been removed. Assets are documented in [PORTRAIT_ASSETS.md](./docs/PORTRAIT_ASSETS.md).
 
 Browser tests start their own production server on port 3100 and no longer reuse a development server on port 3000.
 

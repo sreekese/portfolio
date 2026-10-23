@@ -1,3 +1,9 @@
+# About photo retouch
+
+The About section now uses `src/assets/sreekese-photo-clean.png`. The built-in imagegen edit removed the red forehead mark from the enhanced portrait while requesting preservation of identity, expression, glasses, hair, beard, clothes, framing, lighting and background. The prior asset is retained. This is a targeted AI retouch, not a new portrait.
+
+## Previous implementation records
+
 # New orange-hoodie character
 
 Replaced the previous avatar geometry with a new simplified Three.js character inspired by the supplied `3d-og.avif` render, following the user's choice of a simplified 3D interpretation. The image is a visual reference, not an imported 3D asset. The new model has swept brown tapered hair locks, large layered eyes, a clean-shaven face, orange hoodie with hood/zipper/drawstrings, dark trousers, and two-tone sneakers. It has no glasses. Its face differs from the reference and is not a reconstruction of the user's face.

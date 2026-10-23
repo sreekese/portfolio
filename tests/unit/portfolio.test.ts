@@ -9,9 +9,9 @@ import {
 } from "@/lib/portfolio";
 import { contentSecurityPolicy } from "@/lib/security";
 describe("portfolio domain rules", () => {
-  it("preserves all three projects and their order without mutating the input", () => {
+  it("preserves all projects and their order without mutating the input", () => {
     const original = JSON.stringify(portfolio.projects);
-    expect(filterProjects(portfolio.projects, "All")).toHaveLength(3);
+    expect(filterProjects(portfolio.projects, "All")).toHaveLength(4);
     expect(
       filterProjects(portfolio.projects, "React.js").map((p) => p.title),
     ).toEqual(["Netflix Clone", "Offer Application", "Youtube Clone"]);
@@ -19,7 +19,8 @@ describe("portfolio domain rules", () => {
   });
   it.each([
     ["React.js", 3],
-    ["Movies", 1],
+    ["Movies", 2],
+    ["Booking", 1],
     ["Offers", 1],
     ["Video", 1],
     ["Unknown", 0],
@@ -44,7 +45,9 @@ describe("portfolio domain rules", () => {
     expect(initials("")).toBe("");
   });
   it("validates unique ids, known tags and complete project content", () => {
-    expect(new Set(portfolio.projects.map((p) => p.no)).size).toBe(3);
+    expect(new Set(portfolio.projects.map((p) => p.no)).size).toBe(
+      portfolio.projects.length,
+    );
     for (const project of portfolio.projects) {
       expect(project.title.length).toBeGreaterThan(0);
       expect(project.facts).toHaveLength(3);

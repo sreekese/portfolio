@@ -344,7 +344,7 @@ button {
 }
 .lede {
   margin: 0;
-  font-size: clamp(18px, 1.8vw, 21px);
+  font-size: clamp(15px, 1.4vw, 17px);
   line-height: 1.6;
   color: var(--mute);
   max-width: 34em;
@@ -863,7 +863,7 @@ dialog::backdrop {
 }
 .statement {
   margin: 0;
-  font: 500 clamp(24px, 3.5vw, 44px)/1.22 var(--font-display);
+  font: 500 clamp(20px, 2.3vw, 30px)/1.4 var(--font-display);
   letter-spacing: -0.025em;
 }
 .w {
@@ -1503,7 +1503,7 @@ body {
   font-size: clamp(46px, 7.5vw, 100px);
 }
 .hero-copy .tagline {
-  font-size: clamp(28px, 3.6vw, 48px);
+  font-size: clamp(24px, 2.6vw, 34px);
 }
 .hero-avatar {
   position: relative;
@@ -1987,4 +1987,22 @@ body {
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+/* Compact body copy, with smaller captions retaining their own sizing. */
+p {
+  font-size: 14px;
+}
+.card p,
+.svc p,
+.job p,
+.dlg-text p,
+.education-entry p {
+  font-size: 14px;
+  line-height: 1.65;
+}
+@media (max-width: 720px) {
+  .hero-copy .tagline {
+    font-size: 24px;
+  }
 }
