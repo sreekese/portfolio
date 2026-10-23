@@ -1,9 +1,56 @@
+# Dependencies and package-manager caches
 node_modules/
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/install-state.gz
+.pnp.*
+
+# Generated Next.js/build files
 .next/
 out/
+dist/
+build/
+next-env.d.ts
+*.tsbuildinfo
+.turbo/
+.cache/
+
+# Test and coverage output
 coverage/
 playwright-report/
+playwright/.cache/
 test-results/
-*.tsbuildinfo
+blob-report/
+
+# Local environment and credentials (keep the safe template)
 .env*
 !.env.example
+*.pem
+*.key
+.aws/
+
+# Local deployment, editor, and agent settings
+.vercel/
+.netlify/
+.vscode/
+.idea/
+.codex/
+.claude/
+
+# Logs, temporary files, and OS metadata
+*.log
+*.swp
+*.swo
+*~
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+/tmp/
+/temp/
+__pycache__/
+*.py[cod]
+.venv/
+venv/

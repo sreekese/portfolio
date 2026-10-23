@@ -32,7 +32,9 @@ try {
       await page.title(),
       (await page.locator("body").innerText()).slice(0, 350),
     );
-    const assetName = project.no === "01" ? "01-v2" : project.no;
+    const assetName = ["01", "04"].includes(project.no)
+      ? `${project.no}-v2`
+      : project.no;
     await page.screenshot({ path: `public/projects/${assetName}.png` });
     const max = await page.evaluate(() =>
       Math.min(

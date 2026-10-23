@@ -4,6 +4,10 @@ The portfolio serves public resume-based portfolio content and has no login, dat
 
 Production controls include request-specific CSP script nonces, safe React text rendering, same-origin fonts, HTTPS-only social URL validation, restrictive response headers, and no shared caching of nonce-bearing HTML. See PROJECT_GUIDELINES.md for the OWASP Top 10:2025 mapping and future-feature requirements.
 
+## Next.js security update — 23 October 2026
+
+Next.js and its matching ESLint configuration are upgraded to 16.4.2, with the resolved versions recorded in `package-lock.json`. The reported image-optimization RCE ([GHSA-2464-fhr4-w9xw](https://github.com/advisories/GHSA-2464-fhr4-w9xw)), Server Actions denial of service ([GHSA-p3m5-59mp-jv5r](https://github.com/advisories/GHSA-p3m5-59mp-jv5r)), and typed-array cache RCE ([GHSA-673q-mjm6-r5xr](https://github.com/advisories/GHSA-673q-mjm6-r5xr)) affect Next.js through 16.4.0 and list 16.4.1 as patched. Deployments must rebuild from the updated lockfile to receive the fix.
+
 ## Development dependency advisory
 
 As of 14 October 2026, `eslint-config-next` depends on `@next/eslint-plugin-next`, which uses `fast-glob` → `micromatch` → `braces`. The [braces advisory GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm) reports stack exhaustion from deeply nested brace patterns and lists no patched version.

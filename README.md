@@ -58,3 +58,9 @@ Browser tests start their own production server on port 3100 and no longer reuse
 ## Spoken introduction
 
 Click the banner avatar or **Play introduction** to hear the intro; click again or use **Stop audio** to stop. Edit `spokenIntro` in `src/data/portfolio.json` to change the script. Speech uses the visitor’s browser voice (not a cloned voice), and a status message explains when playback is unsupported. No introduction transcript is displayed. The banner lazy-loads a full-body Three.js character that stands beside a desk, chair and laptop, and speaks when clicked. Its modeled likeness is stylized, with approximate mouth movement. A text status supports devices without WebGL; no alternate avatar appears during loading. The speaking motion respects reduced-motion settings independently of audio. The About portrait now uses the enhanced headshot without CSS enlargement.
+
+## Git hygiene
+
+Commit source code, tests, configuration, documentation, required portfolio images/GIFs, `.env.example`, and `package-lock.json`. Generated builds, dependencies, reports, logs, local settings, and environment secrets are excluded by `.gitignore`. Keep `.env.example` free of real credentials.
+
+`next-env.d.ts` is generated locally; `npm run typecheck` generates Next.js types before checking a fresh checkout. Review `git status --short` and `git diff --cached --stat` before committing. Ignore rules prevent accidental additions; they do not remove files from past commits or prevent `git add -f`.

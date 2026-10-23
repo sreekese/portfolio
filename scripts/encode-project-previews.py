@@ -16,7 +16,7 @@ for number in (sys.argv[1:] or [project["no"] for project in projects]):
         sample.paste(frame, (0, i * 400))
     palette = sample.quantize(colors=192)
     indexed = [frame.quantize(palette=palette, dither=Image.Dither.FLOYDSTEINBERG) for frame in frames]
-    asset_name = "01-v2" if number == "01" else number
+    asset_name = f"{number}-v2" if number in ("01", "04") else number
     output = Path(f"public/projects/{asset_name}.gif")
     indexed[0].save(output, save_all=True, append_images=indexed[1:], duration=170, loop=0, optimize=True, disposal=2)
     print(output, output.stat().st_size, "bytes")

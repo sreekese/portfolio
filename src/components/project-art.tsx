@@ -12,7 +12,9 @@ export function ProjectArt({
   project: Project;
   hovered?: boolean;
 }) {
-  const assetName = project.no === "01" ? "01-v2" : project.no;
+  const assetName = ["01", "04"].includes(project.no)
+    ? `${project.no}-v2`
+    : project.no;
   const [active, setActive] = useState(false);
   const reduced = useReducedMotion();
   const playing = (active || hovered) && !reduced;
