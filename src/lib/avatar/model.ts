@@ -1,27 +1,19 @@
 import * as T from "three";
+import { GLTFLoader, type GLTF } from "three/addons/loaders/GLTFLoader.js";
 
 export const studioCameraPosition = [2.8, 2.9, 6.8] as const;
 
-/** A new, simplified character inspired by the supplied orange-hoodie render. */
-export function createAvatarStudio() {
+export async function loadAvatarStudio() {
+  const avatar = await new GLTFLoader().loadAsync("/models/boy-avatar.glb");
+  return createAvatarStudio(avatar);
+}
+
+/** Keep the supplied character and its rig intact; normalize only studio placement. */
+export function createAvatarStudio(avatar: Pick<GLTF, "scene" | "animations">) {
   const scene = new T.Scene();
   const fabric = (color: string) =>
     new T.MeshStandardMaterial({ color, roughness: 0.85 });
   const materials = {
-    skin: new T.MeshStandardMaterial({ color: "#e6ad7a", roughness: 0.68 }),
-    blush: fabric("#d4936d"),
-    hair: fabric("#61351f"),
-    strand: fabric("#89502e"),
-    hoodie: fabric("#af4529"),
-    cuff: fabric("#863822"),
-    lining: fabric("#743c2b"),
-    shirt: fabric("#57554c"),
-    denim: fabric("#414b58"),
-    seam: fabric("#343d47"),
-    white: fabric("#fff8e7"),
-    iris: new T.MeshStandardMaterial({ color: "#8b4b25", roughness: 0.35 }),
-    pupil: fabric("#201710"),
-    mouth: fabric("#73442f"),
     sole: fabric("#e5dece"),
     wood: fabric("#b78c64"),
     teal: fabric("#36726b"),
@@ -49,20 +41,6 @@ export function createAvatarStudio() {
     m.castShadow = true;
     m.receiveShadow = true;
     parent.add(m);
-    return m;
-  }
-  function ellipsoid(
-    parent: T.Object3D,
-    material: T.Material,
-    x: number,
-    y: number,
-    z: number,
-    sx: number,
-    sy: number,
-    sz: number,
-  ) {
-    const m = mesh(parent, new T.SphereGeometry(1, 32, 24), material, x, y, z);
-    m.scale.set(sx, sy, sz);
     return m;
   }
   function box(
@@ -96,57 +74,6 @@ export function createAvatarStudio() {
     );
     return m;
   }
-  function curve(
-    parent: T.Object3D,
-    material: T.Material,
-    points: number[][],
-    radius: number,
-  ) {
-    return mesh(
-      parent,
-      new T.TubeGeometry(
-        new T.CatmullRomCurve3(points.map((p) => new T.Vector3(...p))),
-        24,
-        radius,
-        8,
-        false,
-      ),
-      material,
-    );
-  }
-  // Curved tapered locks give the new hair a swept silhouette with pointed ends.
-  function lock(parent: T.Object3D, points: number[][], radius: number) {
-    const path = new T.CatmullRomCurve3(points.map((p) => new T.Vector3(...p)));
-    const frames = path.computeFrenetFrames(24, false);
-    const positions: number[] = [];
-    const indices: number[] = [];
-    for (let i = 0; i <= 24; i++) {
-      const t = i / 24;
-      const center = path.getPoint(t);
-      const r = Math.max(0.001, radius * Math.sin(Math.PI * (0.12 + t * 0.88)));
-      for (let j = 0; j < 12; j++) {
-        const angle = (j / 12) * Math.PI * 2;
-        const point = center
-          .clone()
-          .addScaledVector(frames.normals[i], Math.cos(angle) * r)
-          .addScaledVector(frames.binormals[i], Math.sin(angle) * r * 0.65);
-        positions.push(point.x, point.y, point.z);
-        if (i < 24) {
-          const a = i * 12 + j,
-            b = i * 12 + ((j + 1) % 12);
-          indices.push(a, b, a + 12, b, b + 12, a + 12);
-        }
-      }
-    }
-    const geometry = new T.BufferGeometry();
-    geometry.setAttribute(
-      "position",
-      new T.Float32BufferAttribute(positions, 3),
-    );
-    geometry.setIndex(indices);
-    geometry.computeVertexNormals();
-    mesh(parent, geometry, materials.hair);
-  }
   mesh(
     scene,
     new T.CylinderGeometry(2.35, 2.4, 0.12, 80),
@@ -158,298 +85,49 @@ export function createAvatarStudio() {
   const person = new T.Group();
   person.name = "Sreekese";
   scene.add(person);
-  const body = new T.Group();
-  person.add(body);
-  ellipsoid(body, materials.denim, 0, 1.02, 0, 0.27, 0.19, 0.18);
-  for (const side of [-1, 1]) {
-    const leg = new T.Group();
-    leg.position.set(side * 0.155, 0.97, 0);
-    body.add(leg);
-    const trouser = mesh(
-      leg,
-      new T.CapsuleGeometry(0.125, 0.57, 8, 20),
-      materials.denim,
-      0,
-      -0.37,
-      0,
-    );
-    trouser.scale.z = 1.08;
-    trouser.rotation.z = side * 0.04;
-    ellipsoid(leg, materials.denim, side * 0.015, -0.72, 0, 0.142, 0.08, 0.14);
-    curve(
-      leg,
-      materials.seam,
-      [
-        [side * 0.09, -0.12, 0.08],
-        [side * 0.11, -0.38, 0.08],
-        [side * 0.1, -0.67, 0.09],
-      ],
-      0.006,
-    );
-    ellipsoid(leg, materials.hoodie, 0, -0.82, 0.1, 0.16, 0.11, 0.245);
-    ellipsoid(leg, materials.sole, 0, -0.89, 0.11, 0.17, 0.045, 0.26);
-    ellipsoid(leg, materials.white, 0, -0.82, 0.255, 0.15, 0.07, 0.095);
-    for (let i = 0; i < 3; i++)
-      rod(
-        leg,
-        materials.sole,
-        new T.Vector3(-0.08, -0.745, 0.09 + i * 0.035),
-        new T.Vector3(0.08, -0.745, 0.1 + i * 0.035),
-        0.009,
-      );
-  }
-  ellipsoid(body, materials.shirt, 0, 1.39, 0.01, 0.265, 0.42, 0.18);
-  // Open hoodie panels, hem, raised hood, zipper edges and drawstrings.
-  const hoodie = new T.Group();
-  hoodie.name = "orange-hoodie";
-  body.add(hoodie);
-  for (const side of [-1, 1]) {
-    ellipsoid(
-      hoodie,
-      materials.hoodie,
-      side * 0.175,
-      1.4,
-      0,
-      0.16,
-      0.39,
-      0.205,
-    );
-    ellipsoid(
-      hoodie,
-      materials.cuff,
-      side * 0.17,
-      1.07,
-      0.005,
-      0.17,
-      0.055,
-      0.205,
-    );
-    const hood = ellipsoid(
-      hoodie,
-      materials.hoodie,
-      side * 0.16,
-      1.77,
-      -0.075,
-      0.17,
-      0.17,
-      0.16,
-    );
-    hood.rotation.z = side * 0.4;
-    ellipsoid(
-      hoodie,
-      materials.lining,
-      side * 0.105,
-      1.77,
-      0.045,
-      0.075,
-      0.12,
-      0.075,
-    );
-    curve(
-      hoodie,
-      materials.sole,
-      [
-        [side * 0.09, 1.75, 0.18],
-        [side * 0.095, 1.45, 0.204],
-        [side * 0.1, 1.12, 0.19],
-      ],
-      0.009,
-    );
-    curve(
-      hoodie,
-      materials.sole,
-      [
-        [side * 0.13, 1.77, 0.2],
-        [side * 0.145, 1.59, 0.228],
-        [side * 0.14, 1.45, 0.227],
-      ],
-      0.012,
-    );
-    curve(
-      hoodie,
-      materials.cuff,
-      [
-        [side * 0.26, 1.34, 0.16],
-        [side * 0.19, 1.25, 0.2],
-        [side * 0.16, 1.15, 0.2],
-      ],
-      0.008,
-    );
-  }
-  const arms = [-1, 1].map((side) => {
-    const arm = new T.Group();
-    arm.position.set(side * 0.3, 1.68, 0);
-    body.add(arm);
-    mesh(
-      arm,
-      new T.CapsuleGeometry(0.1, 0.42, 8, 20),
-      materials.hoodie,
-      0,
-      -0.24,
-      0,
-    );
-    ellipsoid(arm, materials.cuff, 0, -0.49, 0, 0.112, 0.065, 0.11);
-    ellipsoid(arm, materials.skin, 0, -0.64, 0.015, 0.073, 0.12, 0.06);
-    for (let i = 0; i < 4; i++)
-      mesh(
-        arm,
-        new T.CapsuleGeometry(0.014, 0.06, 4, 8),
-        materials.skin,
-        -0.046 + i * 0.029,
-        -0.74,
-        0.025,
-      );
-    ellipsoid(
-      arm,
-      materials.skin,
-      -side * 0.065,
-      -0.62,
-      0.055,
-      0.026,
-      0.065,
-      0.03,
-    );
-    return arm;
+  const character = avatar.scene;
+  character.updateMatrixWorld(true);
+  const bounds = new T.Box3().setFromObject(character);
+  const size = bounds.getSize(new T.Vector3());
+  if (!Number.isFinite(size.y) || size.y <= 0)
+    throw new Error("Empty avatar model");
+  const scale = 2.7 / size.y;
+  const center = bounds.getCenter(new T.Vector3());
+  character.scale.multiplyScalar(scale);
+  character.position.set(
+    -center.x * scale,
+    -bounds.min.y * scale,
+    -center.z * scale,
+  );
+  person.add(character);
+  const faces: T.Mesh[] = [];
+  character.traverse((object) => {
+    if (object instanceof T.Mesh) {
+      object.castShadow = true;
+      object.receiveShadow = true;
+      if (object.morphTargetDictionary && object.morphTargetInfluences)
+        faces.push(object);
+    }
   });
-  mesh(
-    body,
-    new T.CylinderGeometry(0.095, 0.12, 0.22, 24),
-    materials.skin,
-    0,
-    1.85,
-    0,
-  );
-  const head = new T.Group();
-  head.name = "reference-head";
-  head.position.set(0, 2.2, 0);
-  body.add(head);
-  // Large reference-style head with cheeks, tapered jaw and a small nose.
-  ellipsoid(head, materials.skin, 0, 0.015, 0, 0.35, 0.405, 0.3);
-  for (const side of [-1, 1]) {
-    ellipsoid(
-      head,
-      materials.skin,
-      side * 0.345,
-      -0.025,
-      0,
-      0.075,
-      0.115,
-      0.065,
+  const mixer = new T.AnimationMixer(character);
+  const idle = avatar.animations.find((clip) => clip.name === "Idle");
+  // Keep facial weights controlled by speech, rather than the demo animation.
+  if (idle) {
+    const bodyIdle = new T.AnimationClip(
+      "StudioIdle",
+      idle.duration,
+      idle.tracks.filter(
+        (track) => !track.name.endsWith(".morphTargetInfluences"),
+      ),
     );
-    ellipsoid(
-      head,
-      materials.blush,
-      side * 0.365,
-      -0.025,
-      0.045,
-      0.037,
-      0.069,
-      0.022,
-    );
+    mixer.clipAction(bodyIdle).play();
   }
-  const eyes = new T.Group();
-  eyes.name = "eyes";
-  head.add(eyes);
-  for (const side of [-1, 1]) {
-    const eye = new T.Group();
-    eye.position.set(side * 0.135, 0.035, 0.264);
-    eyes.add(eye);
-    ellipsoid(eye, materials.white, 0, 0, 0, 0.104, 0.118, 0.045);
-    ellipsoid(eye, materials.iris, 0, 0, 0.041, 0.059, 0.073, 0.016);
-    ellipsoid(eye, materials.pupil, 0, 0, 0.055, 0.035, 0.052, 0.008);
-    ellipsoid(eye, materials.white, -0.018, 0.032, 0.065, 0.016, 0.019, 0.006);
-    ellipsoid(eye, materials.white, 0.02, -0.022, 0.063, 0.006, 0.007, 0.004);
-    curve(
-      head,
-      materials.hair,
-      [
-        [side * 0.055, 0.17, 0.25],
-        [side * 0.13, 0.2, 0.258],
-        [side * 0.22, 0.17, 0.23],
-      ],
-      0.023,
-    );
-    curve(
-      eye,
-      materials.blush,
-      [
-        [-0.095, 0.055, 0.005],
-        [0, 0.12, 0.008],
-        [0.095, 0.055, 0.005],
-      ],
-      0.009,
-    );
-  }
-  ellipsoid(head, materials.skin, 0, -0.064, 0.29, 0.073, 0.072, 0.075);
-  ellipsoid(head, materials.blush, 0, -0.081, 0.348, 0.052, 0.031, 0.023);
-  const smile = curve(
-    head,
-    materials.mouth,
-    [
-      [-0.105, -0.177, 0.267],
-      [0, -0.197, 0.283],
-      [0.105, -0.177, 0.267],
-    ],
-    0.009,
-  );
-  const mouth = ellipsoid(
-    head,
-    materials.mouth,
-    0,
-    -0.19,
-    0.278,
-    0.065,
-    0.024,
-    0.014,
-  );
-  mouth.name = "speaking-mouth";
-  const hair = new T.Group();
-  hair.name = "swept-hair";
-  head.add(hair);
-  ellipsoid(hair, materials.hair, 0, 0.27, -0.07, 0.36, 0.23, 0.29);
-  for (const side of [-1, 1]) {
-    ellipsoid(
-      hair,
-      materials.hair,
-      side * 0.3,
-      0.13,
-      -0.075,
-      0.065,
-      0.22,
-      0.19,
-    );
-    lock(
-      hair,
-      [
-        [side * 0.2, 0.16, -0.16],
-        [side * 0.32, -0.1, -0.17],
-        [side * 0.31, -0.22, -0.12],
-      ],
-      0.07,
-    );
-  }
-  for (let i = 0; i < 7; i++) {
-    const x = -0.25 + i * 0.072;
-    lock(
-      hair,
-      [
-        [x, 0.34, -0.12],
-        [x + 0.1, 0.48, 0.02],
-        [x + 0.03, 0.39, 0.23],
-        [x - 0.12, 0.2, 0.29],
-      ],
-      0.085,
-    );
-    curve(
-      hair,
-      materials.strand,
-      [
-        [x + 0.015, 0.37, 0.02],
-        [x + 0.04, 0.44, 0.1],
-        [x - 0.015, 0.35, 0.25],
-      ],
-      0.004,
-    );
+  function expression(name: string, weight: number) {
+    faces.forEach((face) => {
+      const index = face.morphTargetDictionary?.[name];
+      if (index !== undefined && face.morphTargetInfluences)
+        face.morphTargetInfluences[index] = weight;
+    });
   }
   // Desk, an open laptop, task chair, notebook and mug.
   const desk = new T.Group();
@@ -540,18 +218,60 @@ export function createAvatarStudio() {
       studioCameraPosition[0] - person.position.x,
       studioCameraPosition[2] - person.position.z,
     );
-    head.rotation.x = -0.08;
-    head.rotation.z = speaking && !reduced ? Math.sin(t * 2) * 0.018 : 0;
-    arms.forEach((arm, i) => {
-      arm.rotation.z =
-        (i === 0 ? -1 : 1) *
-        (0.12 + (speaking && !reduced ? Math.sin(t * 2) * 0.02 : 0));
-    });
-    eyes.scale.y = !reduced && t % 4.8 > 4.64 ? 0.12 : 1;
-    smile.visible = !speaking || reduced;
-    mouth.visible = speaking && !reduced;
-    mouth.scale.y = 0.024 * (0.4 + Math.abs(Math.sin(t * 13)));
+    mixer.setTime(t);
+    const talking = speaking && !reduced;
+    expression(
+      "jawOpen",
+      talking ? 0.15 + Math.abs(Math.sin(t * 11)) * 0.45 : 0,
+    );
+    expression("mouthFunnel", talking ? Math.max(0, Math.sin(t * 7)) * 0.2 : 0);
+    const blink = !reduced && t % 4.8 > 4.64 ? 1 : 0;
+    expression("eyeBlinkLeft", blink);
+    expression("eyeBlinkRight", blink);
   }
   pose(0, false, true);
-  return { scene, pose };
+  return {
+    scene,
+    pose,
+    dispose: () => {
+      mixer.stopAllAction();
+      mixer.uncacheRoot(character);
+      disposeScene(scene);
+    },
+  };
+}
+
+/** Release embedded GLB textures, skinning resources, and studio geometry. */
+export function disposeScene(scene: T.Object3D) {
+  const geometries = new Set<T.BufferGeometry>();
+  const materials = new Set<T.Material>();
+  const textures = new Set<T.Texture>();
+  const skeletons = new Set<T.Skeleton>();
+  scene.traverse((object) => {
+    if (object instanceof T.Mesh) {
+      geometries.add(object.geometry);
+      (Array.isArray(object.material)
+        ? object.material
+        : [object.material]
+      ).forEach((material) => materials.add(material));
+    }
+    if (object instanceof T.SkinnedMesh) skeletons.add(object.skeleton);
+    if (object instanceof T.DirectionalLight) object.shadow.dispose();
+  });
+  materials.forEach((material) => {
+    Object.values(material).forEach((value) => {
+      if (value instanceof T.Texture) textures.add(value);
+    });
+    material.dispose();
+  });
+  textures.forEach((texture) => {
+    if (
+      typeof ImageBitmap !== "undefined" &&
+      texture.source.data instanceof ImageBitmap
+    )
+      texture.source.data.close();
+    texture.dispose();
+  });
+  geometries.forEach((geometry) => geometry.dispose());
+  skeletons.forEach((skeleton) => skeleton.dispose());
 }

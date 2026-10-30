@@ -233,6 +233,14 @@ async function mockSpeech(page: Page) {
 test("personal portraits load and avatar starts and stops its introduction", async ({
   page,
 }) => {
+  const textureErrors: string[] = [];
+  page.on("console", (message) => {
+    if (/Couldn't load texture|Content Security Policy/.test(message.text()))
+      textureErrors.push(message.text());
+  });
+  const modelResponse = page.waitForResponse((response) =>
+    response.url().endsWith("/models/boy-avatar.glb"),
+  );
   // Includes two lazy images, WebGL shader compilation, and speech controls.
   test.setTimeout(60000);
   await mockSpeech(page);
@@ -253,6 +261,8 @@ test("personal portraits load and avatar starts and stops its introduction", asy
     "ready",
   );
   await expect(avatar.locator("canvas")).toBeVisible();
+  expect((await modelResponse).ok()).toBe(true);
+  expect(textureErrors).toEqual([]);
   await avatar.focus();
   await page.keyboard.press("Enter");
   await expect(page.locator(".hero-avatar")).toHaveAttribute(
@@ -402,5 +412,25 @@ test("Quick Show appears in work with its live link and booking filter", async (
     .click();
   await expect(page.getByRole("dialog")).toContainText(
     "Demo reservations; not valid admission tickets",
+  );
+});
+
+test("failed GLB download retains the spoken introduction fallback", async ({
+  page,
+}) => {
+  await mockSpeech(page);
+  await page.route("**/models/boy-avatar.glb", (route) => route.abort());
+  await page.goto("/");
+  await expect(page.locator(".avatar-studio")).toHaveAttribute(
+    "data-status",
+    "fallback",
+  );
+  await expect(page.locator(".avatar-studio canvas")).toHaveCount(0);
+  await page
+    .getByRole("button", { name: "Hear Sreekese’s introduction" })
+    .click();
+  await expect(page.locator(".hero-avatar")).toHaveAttribute(
+    "data-speaking",
+    "true",
   );
 });

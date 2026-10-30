@@ -76,3 +76,12 @@ The avatar has a one-time arrival/wave, bounded pointer-following tilt, and clic
 ## Final generation prompt
 
 Use case: style-transfer. Create one polished illustrated avatar asset for this person's professional React developer portfolio. Reference image is the identity reference: preserve his recognizable face, medium brown skin, black wavy swept hair, thin rectangular glasses, short beard and moustache, and burgundy collared shirt. Friendly subtle smile. Premium editorial illustration with softly shaded clean shapes, not exaggerated caricature, not photorealistic. Waist-up centered front-facing bust, both shoulders fully visible, arms resting naturally, clean silhouette. Transparent background, no backdrop, no text, no border, no laptop, no extra objects. Face and eyes facing the viewer. Generous transparent margin around head and shoulders. This will be used as an interactive hero avatar on a minimal teal and cool-neutral portfolio. Return a single avatar, not a sheet.
+
+
+## Supplied GLB avatar — 26 October 2026
+
+The hero now loads `public/models/boy-avatar.glb`, copied from the user-supplied `boy_avatar.glb` (6.5 MB). The supplied `3d-og.avif` was used for visual comparison; it is not a runtime dependency and has not been copied into the repository. The previous procedural character has been removed from the scene; the desk, laptop, and chair remain.
+
+The asset contains a skinned character, embedded face texture, an Idle clip, and facial morph targets. Its source geometry and materials are preserved. The integration normalizes height/ground placement, faces the character toward the camera, uses the Idle skeletal tracks, and drives jaw/mouth and blink controls. Mouth movement is approximate speech activity, not phoneme-synchronized lip sync. Reduced motion disables these movements without preventing audio.
+
+The face texture needs local `blob:` fetches in CSP `connect-src` for GLTFLoader decoding. Geometry, textures, skeletons, and animation resources are released on unmount; failed downloads retain the spoken-introduction fallback. Only the required GLB is added to Git; inspection screenshots stay in `/tmp`.

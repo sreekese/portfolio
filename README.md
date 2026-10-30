@@ -57,7 +57,7 @@ Browser tests start their own production server on port 3100 and no longer reuse
 
 ## Spoken introduction
 
-Click the banner avatar or **Play introduction** to hear the intro; click again or use **Stop audio** to stop. Edit `spokenIntro` in `src/data/portfolio.json` to change the script. Speech uses the visitor’s browser voice (not a cloned voice), and a status message explains when playback is unsupported. No introduction transcript is displayed. The banner lazy-loads a full-body Three.js character that stands beside a desk, chair and laptop, and speaks when clicked. Its modeled likeness is stylized, with approximate mouth movement. A text status supports devices without WebGL; no alternate avatar appears during loading. The speaking motion respects reduced-motion settings independently of audio. The About portrait now uses the enhanced headshot without CSS enlargement.
+Click the banner avatar or **Play introduction** to hear the intro; click again or use **Stop audio** to stop. Edit `spokenIntro` in `src/data/portfolio.json` to change the script. Speech uses the visitor’s browser voice (not a cloned voice), and a status message explains when playback is unsupported. No introduction transcript is displayed. The banner lazy-loads the supplied `public/models/boy-avatar.glb` character that stands beside a desk, chair and laptop, and speaks when clicked. Its supplied geometry and embedded face texture are preserved, with approximate speech-driven mouth movement using its facial morph targets. A text status supports devices without WebGL; no alternate avatar appears during loading. The speaking motion respects reduced-motion settings independently of audio. The About portrait now uses the enhanced headshot without CSS enlargement.
 
 ## Git hygiene
 

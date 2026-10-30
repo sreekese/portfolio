@@ -14,8 +14,9 @@ export function AvatarStudio({ speaking, reduced }: Props) {
     let cancelled = false;
     let dispose: (() => void) | undefined;
     async function start() {
-      const [T, { createAvatarStudio, studioCameraPosition }] =
-        await Promise.all([import("three"), import("@/lib/avatar/model")]);
+      const [T, { loadAvatarStudio, studioCameraPosition }] = await Promise.all(
+        [import("three"), import("@/lib/avatar/model")],
+      );
       if (cancelled || !host.current) return;
       const element = host.current;
       let renderer: InstanceType<typeof T.WebGLRenderer>;
@@ -29,7 +30,19 @@ export function AvatarStudio({ speaking, reduced }: Props) {
         setStatus("fallback");
         return;
       }
-      const { scene, pose } = createAvatarStudio();
+      let studio: Awaited<ReturnType<typeof loadAvatarStudio>>;
+      try {
+        studio = await loadAvatarStudio();
+      } catch (error) {
+        renderer.dispose();
+        throw error;
+      }
+      if (cancelled) {
+        studio.dispose();
+        renderer.dispose();
+        return;
+      }
+      const { scene, pose } = studio;
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = T.PCFShadowMap;
@@ -96,18 +109,7 @@ export function AvatarStudio({ speaking, reduced }: Props) {
         resizeObserver.disconnect();
         intersection.disconnect();
         renderer.domElement.removeEventListener("webglcontextlost", onLost);
-        const materials = new Set<InstanceType<typeof T.Material>>();
-        scene.traverse((object) => {
-          if (object instanceof T.Mesh) {
-            object.geometry.dispose();
-            const list = Array.isArray(object.material)
-              ? object.material
-              : [object.material];
-            list.forEach((m) => materials.add(m));
-          }
-          if (object instanceof T.DirectionalLight) object.shadow.dispose();
-        });
-        materials.forEach((m) => m.dispose());
+        studio.dispose();
         renderer.dispose();
         renderer.domElement.remove();
       };

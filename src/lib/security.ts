@@ -9,7 +9,8 @@ export function contentSecurityPolicy(
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob:",
     "font-src 'self'",
-    `connect-src 'self'${development ? " ws: wss:" : ""}`,
+    // GLTFLoader decodes embedded image textures through local blob URLs.
+    `connect-src 'self' blob:${development ? " ws: wss:" : ""}`,
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
